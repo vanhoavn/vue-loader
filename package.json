@@ -1,6 +1,6 @@
 {
   "name": "vue-loader",
-  "version": "13.1.0",
+  "version": "13.6.1",
   "description": "Vue single-file component loader for Webpack",
   "main": "index.js",
   "repository": {
@@ -51,7 +51,7 @@
     "prettier": "^1.7.0",
     "resolve": "^1.4.0",
     "source-map": "^0.6.1",
-    "vue-hot-reload-api": "^2.1.0",
+    "vue-hot-reload-api": "^2.2.0",
     "vue-style-loader": "^3.0.0",
     "vue-template-es2015-compiler": "^1.6.0"
   },
@@ -94,9 +94,9 @@
     "stylus-loader": "^3.0.1",
     "sugarss": "^1.0.0",
     "url-loader": "^0.6.2",
-    "vue": "^2.4.4",
-    "vue-server-renderer": "^2.4.4",
-    "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.4.1"
+    "vue": "^2.5.0",
+    "vue-server-renderer": "^2.5.0",
+    "vue-template-compiler": "^2.5.0",
+    "webpack": "^3.7.1"
   }
 }

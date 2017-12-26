@@ -1,8 +1,8 @@
 # オプションリファレンス
 
-## Webpack 1 と 2 の使い方の違い
+## webpack 1 と 2 の使い方の違い
 
-Webpack 2 の場合: オプションを loader ルールに直接渡します。
+webpack 2 の場合: オプションを loader ルールに直接渡します。
 
 ``` js
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          // vue-loader オプション
+          // `vue-loader` オプション
         }
       }
     ]
@@ -21,13 +21,13 @@ module.exports = {
 }
 ```
 
-Webpack 1.x の場合: Webpack の設定のルートに `vue` ブロックを追加します。
+webpack 1.x の場合: webpack の設定のルートに `vue` ブロックを追加します。
 
 ``` js
 module.exports = {
   // ...
   vue: {
-    // vue-loader オプション
+    // `vue-loader` オプション
   }
 }
 ```
@@ -36,7 +36,7 @@ module.exports = {
 
 - 型: `{ [lang: string]: string }`
 
-  `* .vue` ファイル内の言語ブロックに使用されるデフォルトの loader を上書きする Webpack loader を指定するオブジェクト。キーは指定されている場合、言語ブロックの `lang` 属性に対応します。各タイプのデフォルトの `lang` は次のとおりです:
+  `* .vue` ファイル内の言語ブロックに使用されるデフォルトの loader を上書きする webpack loader を指定するオブジェクト。キーは指定されている場合、言語ブロックの `lang` 属性に対応します。各タイプのデフォルトの `lang` は次のとおりです:
 
   - `<template>`: `html`
   - `<script>`: `js`
@@ -45,7 +45,7 @@ module.exports = {
   たとえば、`babel-loader` と `eslint-loader` を使ってすべての `<script>` ブロックを処理するには:
 
   ``` js
-  // Webpack 2.x config
+  // webpack 2.x config
   module: {
     rules: [
       {
@@ -76,7 +76,7 @@ module.exports = {
   config 形式は `loaders` と同じですが、` postLoaders` はデフォルト loader の後に適用されます。これを使用して言語ブロックを後処理することができます。ただしこれは少し複雑になります:
 
   - `html` の場合、デフォルトの loader によって返される結果は、コンパイルされた JavaScript レンダリング関数コードになります。
-  - `css` の場合、結果は` vue-style-loader` によって返されます。これはほとんどの場合特に有用ではありません。postcss プラグインを使用する方が良いでしょう。
+  - `css` の場合、結果は` vue-style-loader` によって返されます。これはほとんどの場合特に有用ではありません。PostCSS プラグインを使用する方が良いでしょう。
 
 ### postcss
 
@@ -111,6 +111,31 @@ module.exports = {
   }
   ```
 
+### postcss.config
+
+> 13.2.1 で新規追加
+
+- 型: `Object`
+- デフォルト: `undefined`
+
+  このフィールドは、[postcss-loader](https://github.com/postcss/postcss-loader#config-1) と同じ方法で PostCSS の設定をカスタマイズできます。
+
+  - **postcss.config.path**
+
+    PostCSS 設定ファイルを読み込むパス(ファイルまたはディレクトリ)を指定します。
+
+    ``` js
+    postcss: {
+      config: {
+        path: path.resolve('./src')
+      }
+    }
+    ```
+
+  - **postcss.config.ctx**
+
+    PostCSS プラグインにコンテキストを提供します。より詳細については、[postcss-loader のドキュメント](https://github.com/postcss/postcss-loader#context-ctx) を参照してください。
+
 ### cssSourceMap
 
 - 型: `boolean`
@@ -118,7 +143,16 @@ module.exports = {
 
   CSS のソースマップを有効にするかどうか。これを無効にすると、`css-loader` の相対パス関連のバグを避けることができ、ビルドを少し早くすることができます。
 
-  注意: もしメインの Webpack の設定に `devtool` オプションが存在しないければオートで `false` にセットされます。
+  注意: もしメインの webpack の設定に `devtool` オプションが存在しないければオートで `false` にセットされます。
+
+### cacheBusting
+
+> 13.2.0 で新規追加
+
+- 型: `boolean`
+- デフォルト: 開発モードで `true`、プロダクションモードで `false`
+
+ファイル名にハッシュクエリを追加することによってキャッシュを破損を伴うソースマップを生成するかどうか。これをオフにするとソースマップデバッギングにも役に立ちます。
 
 ### esModule
 
@@ -157,7 +191,7 @@ module.exports = {
 - 型: `{ [tag: string]: string | Array<string> }`
 - デフォルト: `{ img: 'src', image: 'xlink:href' }`
 
-  テンプレートのコンパイル中、コンパイラは `src` の URL のような特定の属性を `require` 呼び出しに変換することができます。これによりターゲットの asset を Webpack が処理できるようになります。デフォルトの設定は `<img>` タグの `src` 属性と SVG の `<image>` タグの `xlink:href` 属性を変換します。
+  テンプレートのコンパイル中、コンパイラは `src` の URL のような特定の属性を `require` 呼び出しに変換することができます。これによりターゲットの asset を webpack が処理できるようになります。デフォルトの設定は `<img>` タグの `src` 属性と SVG の `<image>` タグの `xlink:href` 属性を変換します。
 
 ### buble
 
@@ -204,24 +238,24 @@ module.exports = {
   ```
 
 ### extractCSS
-  
+
   > 12.0.0 で追加
-  
+
   - 型: `boolean`
   - デフォルト: `false`
 
   自動的に `extract-text-webpack-plugin` を使用して CSS を抽出します。ほとんどのプリプロセッサに対してすぐに動作し、本番環境においても同様に圧縮 (minify) 処理します。
-  
+
   `true` またはプラグインのインスタンス (複数の抽出されたファイルに対して `extract-text-webpack-plugin` の複数のインスタンスを使用できるように) を値として渡すことができます。
- 
+
   これは、開発中にはホットリロードが動作するため本番環境でのみ使用する必要があります。
-  
+
   例:
-  
+
   ``` js
   // webpack.config.js
   var ExtractTextPlugin = require("extract-text-webpack-plugin")
-  
+
   module.exports = {
     // 他のオプション ...
     module: {
@@ -240,14 +274,14 @@ module.exports = {
     ]
   }
   ```
-  
+
   または、プラグインのインスタンスを渡します:
-  
+
   ``` js
   // webpack.config.js
   var ExtractTextPlugin = require("extract-text-webpack-plugin")
   var plugin = new ExtractTextPlugin("style.css")
-  
+
   module.exports = {
     // 他のオプション ...
     module: {

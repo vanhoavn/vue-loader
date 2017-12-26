@@ -1,8 +1,8 @@
 # Options Reference
 
-## Usage Difference Between Webpack 1 & 2
+## Usage Difference Between webpack 1 & 2
 
-For Webpack 2: pass the options directly to the loader rule.
+For webpack 2: pass the options directly to the loader rule.
 
 ``` js
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          // vue-loader options
+          // `vue-loader` options
         }
       }
     ]
@@ -21,13 +21,13 @@ module.exports = {
 }
 ```
 
-For Webpack 1.x: add a root `vue` block in your Webpack config.
+For webpack 1.x: add a root `vue` block in your webpack config.
 
 ``` js
 module.exports = {
   // ...
   vue: {
-    // vue-loader options
+    // `vue-loader` options
   }
 }
 ```
@@ -36,7 +36,7 @@ module.exports = {
 
 - type: `{ [lang: string]: string }`
 
-  An object specifying Webpack loaders to overwrite the default loaders used for language blocks inside `*.vue` files. The key corresponds to the `lang` attribute for language blocks, if specified. The default `lang` for each type is:
+  An object specifying webpack loaders to overwrite the default loaders used for language blocks inside `*.vue` files. The key corresponds to the `lang` attribute for language blocks, if specified. The default `lang` for each type is:
 
   - `<template>`: `html`
   - `<script>`: `js`
@@ -45,7 +45,7 @@ module.exports = {
   For example, to use `babel-loader` and `eslint-loader` to process all `<script>` blocks:
 
   ``` js
-  // Webpack 2.x config
+  // webpack 2.x config
   module: {
     rules: [
       {
@@ -77,7 +77,7 @@ module.exports = {
 
   - For `html`, the result returned by the default loader will be compiled JavaScript render function code.
 
-  - For `css`, the result will be returned by `vue-style-loader` which isn't particularly useful in most cases. Using a postcss plugin will be a better option.
+  - For `css`, the result will be returned by `vue-style-loader` which isn't particularly useful in most cases. Using a PostCSS plugin will be a better option.
 
 ### postcss
 
@@ -112,6 +112,40 @@ module.exports = {
   }
   ```
 
+### postcss.config
+
+> New in 13.2.1
+
+- type: `Object`
+- default: `undefined`
+
+  This field allows customizing PostCSS config in the same way as [postcss-loader](https://github.com/postcss/postcss-loader#config-1).
+
+  - **postcss.config.path**
+
+    Specify a path (file or directory) to load the PostCSS config file from.
+
+    ``` js
+    postcss: {
+      config: {
+        path: path.resolve('./src')
+      }
+    }
+    ```
+
+  - **postcss.config.ctx**
+
+    Provide context to PostCSS plugins. See [postcss-loader docs](https://github.com/postcss/postcss-loader#context-ctx) for more details.
+
+### postcss.useConfigFile
+
+> New in 13.6.0
+
+- type: `boolean`
+- default: `true`
+
+  Set this to `false` to disable auto-loading of PostCSS config files.
+
 ### cssSourceMap
 
 - type: `boolean`
@@ -119,7 +153,7 @@ module.exports = {
 
   Whether to enable source maps for CSS. Disabling this can avoid some relative path related bugs in `css-loader` and make the build a bit faster.
 
-  Note this is automatically set to `false` if the `devtool` option is not present in the main Webpack config.
+  Note this is automatically set to `false` if the `devtool` option is not present in the main webpack config.
 
 ### esModule
 
@@ -158,7 +192,7 @@ module.exports = {
 - type: `{ [tag: string]: string | Array<string> }`
 - default: `{ img: 'src', image: 'xlink:href' }`
 
-  During template compilation, the compiler can transform certain attributes, such as `src` URLs, into `require` calls, so that the target asset can be handled by Webpack. The default config transforms the `src` attribute on `<img>` tags and `xlink:href` attribute on `<image>` tags of SVG.
+  During template compilation, the compiler can transform certain attributes, such as `src` URLs, into `require` calls, so that the target asset can be handled by webpack. The default config transforms the `src` attribute on `<img>` tags and `xlink:href` attribute on `<image>` tags of SVG.
 
 ### buble
 
@@ -276,3 +310,23 @@ module.exports = {
 - default: `true` when the webpack config has `target: 'node'` and `vue-template-compiler` is at version 2.4.0 or above.
 
 Enable Vue 2.4 SSR compilation optimization that compiles part of the vdom trees returned by render functions into plain strings, which improves SSR performance. In some cases you might want to explicitly turn it off because the resulting render functions can only be used for SSR and cannot be used for client-side rendering or testing.
+
+### cacheBusting
+
+> New in 13.2.0
+
+- type: `boolean`
+- default: `true` in development mode, `false` in production mode.
+
+Whether generate source maps with cache busting by appending a hash query to the file name. Turning this off can help with source map debugging.
+
+### hotReload
+
+> New in 13.5.0
+
+- type: `boolean`
+- default: `true` in development mode, `false` in production mode or when the webpack config has `target: 'node'`.
+- allowed value: `false` (`true` will not force Hot Reload neither in production mode nor when `target: 'node'`)
+
+Whether to use webpack [Hot Module Replacement](https://webpack.js.org/concepts/hot-module-replacement/) to apply changes in the browser **without reloading the page**.
+Use this option (value `false`) to disable the Hot Reload feature in development mode.
